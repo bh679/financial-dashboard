@@ -13,7 +13,7 @@ human oversight at each stage.
 - **Project:** Financial Dashboard
 - **Live URL:** brennan.games/finances
 - **Repos:** financial-dashboard
-- **GitHub Project:** https://github.com/bh679?tab=projects (Project #{{PROJECT_NUMBER}})
+- **GitHub Project:** https://github.com/bh679?tab=projects (Project #15)
 - **Wiki:** github.com/bh679/financial-dashboard/wiki
 
 ---
