@@ -1,0 +1,28 @@
+.category-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.type-badge--income {
+  background: rgba(0, 184, 148, 0.1);
+  color: var(--success);
+}
+
+.type-badge--expense {
+  background: rgba(214, 48, 49, 0.1);
+  color: var(--danger);
+}

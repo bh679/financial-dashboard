@@ -1,0 +1,140 @@
+.tx-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.tx-search {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color var(--transition);
+}
+
+.tx-search:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.tx-filter-select {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.tx-filter-select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.tx-loading {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 48px;
+}
+
+/* Bulk categorize panel */
+.bulk-categorize-panel {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 16px;
+  border-left: 3px solid var(--warning);
+}
+
+.bulk-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.bulk-header h3 {
+  font-size: 1rem;
+}
+
+.bulk-count {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.bulk-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bulk-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  gap: 12px;
+}
+
+.bulk-group-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.bulk-group-keyword {
+  font-weight: 500;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bulk-group-meta {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.btn--sm {
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.tx-row--uncategorized {
+  background: rgba(253, 203, 110, 0.05);
+}
+
+.tx-categorize-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.tx-categorize-btn:hover {
+  background: var(--bg);
+  border-color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .tx-filters {
+    flex-direction: column;
+  }
+
+  .tx-search {
+    min-width: 100%;
+  }
+
+  .bulk-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

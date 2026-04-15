@@ -1,0 +1,17 @@
+{
+  "git/pre-bash.sh": {
+    "version": "1.0.0",
+    "installedAt": "2026-04-14T05:43:55Z",
+    "type": "symlinked"
+  },
+  "git/post-bash.sh": {
+    "version": "1.0.0",
+    "installedAt": "2026-04-14T05:43:55Z",
+    "type": "symlinked"
+  },
+  "versioning/git-hook-pre-commit.sh": {
+    "version": "1.1.0",
+    "installedAt": "2026-04-14T05:43:55Z",
+    "type": "copied"
+  }
+}
