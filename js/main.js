@@ -14,6 +14,8 @@ var App = window.App || {};
             photoURL: user.photoURL
           }
         });
+        // Load learned categorization rules from localStorage
+        App.utils.categorizer.loadLearnedRules();
         var target = App.getScreenFromHash();
         App.showScreen(target);
       } else {

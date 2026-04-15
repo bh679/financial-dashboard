@@ -1,0 +1,143 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  width: 90%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 {
+  font-size: 1.125rem;
+}
+
+.modal-close {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  padding: 4px 8px;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+}
+
+.modal-close:hover {
+  color: var(--text);
+  background: var(--bg);
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-info {
+  margin-bottom: 20px;
+}
+
+.modal-desc {
+  font-weight: 500;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.modal-count {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.modal-field {
+  margin-bottom: 16px;
+}
+
+.modal-field label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.modal-select,
+.modal-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: border-color var(--transition);
+}
+
+.modal-select:focus,
+.modal-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.modal-input {
+  margin-top: 8px;
+}
+
+.modal-remember {
+  background: var(--bg);
+  padding: 12px;
+  border-radius: var(--radius);
+}
+
+.modal-checkbox-label {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  color: var(--text) !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0 !important;
+}
+
+.modal-checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+}
+
+.modal-remember-hint {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  margin-left: 24px;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 8px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  justify-content: flex-end;
+}

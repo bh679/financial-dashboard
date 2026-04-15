@@ -53,6 +53,17 @@ App.services = App.services || {};
       return getUserCollection().doc(id).update(updates);
     },
 
+    updateTransactionsBatch: function (ids, updates) {
+      var batch = firebase.firestore().batch();
+      var col = getUserCollection();
+
+      ids.forEach(function (id) {
+        batch.update(col.doc(id), updates);
+      });
+
+      return batch.commit();
+    },
+
     deleteTransaction: function (id) {
       return getUserCollection().doc(id).delete();
     }

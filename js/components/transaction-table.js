@@ -53,12 +53,17 @@ App.components = App.components || {};
         var amountClass = tx.type === 'income' ? 'amount--income' : 'amount--expense';
         var sign = tx.type === 'income' ? '+' : '-';
 
+        var isUncategorized = !tx.category || tx.category === 'Uncategorized';
+        var categoryCell = isUncategorized
+          ? '<button class="btn btn--sm tx-categorize-btn" data-id="' + (tx.id || '') + '" data-desc="' + (tx.description || '').replace(/"/g, '&quot;') + '">Categorize</button>'
+          : App.components.categoryBadge.render(tx.category);
+
         return (
-          '<tr class="tx-row" data-id="' + (tx.id || '') + '">' +
+          '<tr class="tx-row' + (isUncategorized ? ' tx-row--uncategorized' : '') + '" data-id="' + (tx.id || '') + '">' +
             '<td>' + App.utils.dateUtils.formatDate(dateVal) + '</td>' +
             '<td class="tx-desc">' + App.utils.formatters.truncate(tx.description, 45) + '</td>' +
             '<td class="' + amountClass + '">' + sign + App.utils.formatters.currency(tx.amount, tx.currency) + '</td>' +
-            '<td>' + App.components.categoryBadge.render(tx.category) + '</td>' +
+            '<td>' + categoryCell + '</td>' +
             '<td>' + (tx.business || '') + '</td>' +
             '<td><span class="type-badge type-badge--' + tx.type + '">' + tx.type + '</span></td>' +
           '</tr>'
