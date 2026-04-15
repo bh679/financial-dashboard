@@ -1,6 +1,6 @@
 {
   "name": "financial-dashboard",
-  "version": "1.00.0009",
+  "version": "1.00.0010",
   "description": "Project-level configuration for Financial Dashboard. Contains the Product Engineer agent instructions, permissions, and test configuration.",
   "main": "index.js",
   "scripts": {
