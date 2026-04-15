@@ -8,26 +8,54 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/colors.css">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components/header.css">
+  <link rel="stylesheet" href="css/components/sidebar.css">
+  <link rel="stylesheet" href="css/components/card.css">
+  <link rel="stylesheet" href="css/components/import-dropzone.css">
   <link rel="stylesheet" href="css/screens/login.css">
+  <link rel="stylesheet" href="css/screens/dashboard.css">
+  <link rel="stylesheet" href="css/screens/import.css">
 
   <!-- Firebase (compat mode — no bundler needed) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-  <!-- Libraries (loaded later phases) -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script> -->
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script> -->
 </head>
 <body>
   <div id="app"></div>
 
-  <!-- App JS (order matters: config → state → services → screens → router → main) -->
+  <!-- App JS (order matters: config → state → utils → services → components → screens → router → main) -->
   <script src="js/firebase-config.js"></script>
   <script src="js/state.js"></script>
+
+  <!-- Utils -->
+  <script src="js/utils/formatters.js"></script>
+  <script src="js/utils/date-utils.js"></script>
+  <script src="js/utils/categorizer.js"></script>
+  <script src="js/utils/csv-parser.js"></script>
+
+  <!-- Services -->
   <script src="js/services/auth.js"></script>
+  <script src="js/services/firestore.js"></script>
+
+  <!-- Components -->
+  <script src="js/components/header.js"></script>
+  <script src="js/components/sidebar.js"></script>
+  <script src="js/components/card.js"></script>
+  <script src="js/components/import-dropzone.js"></script>
+
+  <!-- Screens -->
   <script src="js/screens/login.js"></script>
   <script src="js/screens/dashboard.js"></script>
+  <script src="js/screens/import.js"></script>
+  <script src="js/screens/transactions.js"></script>
+  <script src="js/screens/reports.js"></script>
+
+  <!-- App -->
   <script src="js/router.js"></script>
   <script src="js/main.js"></script>
 </body>

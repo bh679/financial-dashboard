@@ -1,0 +1,7 @@
+#dashboard-charts {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  min-height: 200px;
+}
