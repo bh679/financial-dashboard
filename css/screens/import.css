@@ -135,3 +135,27 @@
 .btn--secondary:hover {
   background: var(--bg);
 }
+
+.btn--danger {
+  background: var(--danger);
+  color: white;
+}
+
+.btn--danger:hover {
+  opacity: 0.9;
+}
+
+.btn--danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.import-clear-section {
+  margin-top: 32px;
+}
+
+.import-clear-section hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-bottom: 16px;
+}

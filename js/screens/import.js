@@ -14,9 +14,29 @@ App.screens.import = {
           App.components.importDropzone.render() +
         '</div>' +
         '<div id="import-preview" class="import-preview" style="display:none;"></div>' +
+        '<div class="import-clear-section">' +
+          '<hr>' +
+          '<button class="btn btn--danger" id="clear-reimport">Clear all transactions &amp; re-import</button>' +
+        '</div>' +
       '</div>';
 
     App.components.importDropzone.bind(this.handleFile.bind(this));
+
+    document.getElementById('clear-reimport').addEventListener('click', function () {
+      if (!confirm('This will delete ALL existing transactions. Are you sure?')) return;
+
+      var btn = document.getElementById('clear-reimport');
+      btn.disabled = true;
+      btn.textContent = 'Clearing...';
+
+      App.services.firestore.deleteAllTransactions().then(function (count) {
+        btn.textContent = 'Cleared ' + count + ' transactions. Upload a CSV above.';
+      }).catch(function (err) {
+        btn.disabled = false;
+        btn.textContent = 'Clear all transactions & re-import';
+        alert('Failed to clear: ' + err.message);
+      });
+    });
   },
 
   handleFile: function (file) {
@@ -95,7 +115,7 @@ App.screens.import = {
 
   confirmImport: function (transactions) {
     var previewEl = document.getElementById('import-preview');
-    previewEl.innerHTML = '<p class="import-loading">Importing ' + transactions.length + ' transactions...</p>';
+    previewEl.innerHTML = '<p class="import-loading">Checking for duplicates...</p>';
 
     var firestoreTransactions = transactions.map(function (tx) {
       return Object.assign({}, tx, {
@@ -103,23 +123,65 @@ App.screens.import = {
       });
     });
 
-    App.services.firestore.addTransactions(firestoreTransactions).then(function () {
-      previewEl.innerHTML =
-        '<div class="import-success">' +
-          '<p>Successfully imported ' + transactions.length + ' transactions.</p>' +
-          '<button class="btn btn--primary" id="go-dashboard">Go to Dashboard</button>' +
-          '<button class="btn btn--secondary" id="import-more">Import more</button>' +
-        '</div>';
-
-      document.getElementById('go-dashboard').addEventListener('click', function () {
-        App.showScreen('dashboard');
+    App.services.firestore.getExistingKeys().then(function (existingKeys) {
+      var unique = firestoreTransactions.filter(function (tx) {
+        var ts = tx.date && tx.date.seconds ? tx.date.seconds : '';
+        var key = ts + '|' + tx.description + '|' + tx.amount;
+        return !existingKeys.has(key);
       });
-      document.getElementById('import-more').addEventListener('click', function () {
-        App.showScreen('import');
+
+      var skipped = firestoreTransactions.length - unique.length;
+
+      if (unique.length === 0) {
+        previewEl.innerHTML =
+          '<div class="import-success">' +
+            '<p>All ' + firestoreTransactions.length + ' transactions already exist. Nothing to import.</p>' +
+            '<button class="btn btn--primary" id="go-dashboard">Go to Dashboard</button>' +
+            '<button class="btn btn--secondary" id="import-more">Import different file</button>' +
+          '</div>';
+
+        document.getElementById('go-dashboard').addEventListener('click', function () {
+          App.showScreen('dashboard');
+        });
+        document.getElementById('import-more').addEventListener('click', function () {
+          App.showScreen('import');
+        });
+        return;
+      }
+
+      previewEl.innerHTML = '<p class="import-loading">Importing ' + unique.length + ' transactions...</p>';
+
+      App.services.firestore.addTransactions(unique).then(function () {
+        var msg = 'Successfully imported ' + unique.length + ' transactions.';
+        if (skipped > 0) {
+          msg += ' Skipped ' + skipped + ' duplicates.';
+        }
+
+        previewEl.innerHTML =
+          '<div class="import-success">' +
+            '<p>' + msg + '</p>' +
+            '<button class="btn btn--primary" id="go-dashboard">Go to Dashboard</button>' +
+            '<button class="btn btn--secondary" id="import-more">Import more</button>' +
+          '</div>';
+
+        document.getElementById('go-dashboard').addEventListener('click', function () {
+          App.showScreen('dashboard');
+        });
+        document.getElementById('import-more').addEventListener('click', function () {
+          App.showScreen('import');
+        });
+      }).catch(function (err) {
+        previewEl.innerHTML =
+          '<p class="import-error">Import failed: ' + err.message + '</p>' +
+          '<button class="btn btn--secondary" id="import-retry">Try again</button>';
+
+        document.getElementById('import-retry').addEventListener('click', function () {
+          App.showScreen('import');
+        });
       });
     }).catch(function (err) {
       previewEl.innerHTML =
-        '<p class="import-error">Import failed: ' + err.message + '</p>' +
+        '<p class="import-error">Failed to check for duplicates: ' + err.message + '</p>' +
         '<button class="btn btn--secondary" id="import-retry">Try again</button>';
 
       document.getElementById('import-retry').addEventListener('click', function () {

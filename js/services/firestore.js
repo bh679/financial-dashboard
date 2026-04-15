@@ -66,6 +66,40 @@ App.services = App.services || {};
 
     deleteTransaction: function (id) {
       return getUserCollection().doc(id).delete();
+    },
+
+    deleteAllTransactions: function () {
+      var col = getUserCollection();
+      return col.get().then(function (snapshot) {
+        var docs = [];
+        snapshot.forEach(function (doc) { docs.push(doc.ref); });
+
+        // Firestore batches limited to 500 operations
+        var batches = [];
+        for (var i = 0; i < docs.length; i += 500) {
+          var batch = firebase.firestore().batch();
+          docs.slice(i, i + 500).forEach(function (ref) {
+            batch.delete(ref);
+          });
+          batches.push(batch.commit());
+        }
+
+        return Promise.all(batches).then(function () {
+          return docs.length;
+        });
+      });
+    },
+
+    getExistingKeys: function () {
+      return getUserCollection().get().then(function (snapshot) {
+        var keys = new Set();
+        snapshot.forEach(function (doc) {
+          var data = doc.data();
+          var ts = data.date && data.date.seconds ? data.date.seconds : '';
+          keys.add(ts + '|' + data.description + '|' + data.amount);
+        });
+        return keys;
+      });
     }
   };
 })();
