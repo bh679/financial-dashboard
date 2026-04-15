@@ -60,13 +60,31 @@ App.screens.import = {
     });
   },
 
+  groupByCurrency: function (transactions) {
+    var groups = {};
+    transactions.forEach(function (t) {
+      var cur = t.currency || 'AUD';
+      if (!groups[cur]) groups[cur] = { count: 0, total: 0 };
+      groups[cur].count += 1;
+      groups[cur].total += t.amount;
+    });
+    return groups;
+  },
+
+  formatCurrencyGroups: function (groups) {
+    return Object.keys(groups).map(function (cur) {
+      var g = groups[cur];
+      return g.count + ' (' + App.utils.formatters.currency(g.total, cur) + ')';
+    }).join(', ');
+  },
+
   renderPreview: function (transactions, container) {
     var self = this;
     var income = transactions.filter(function (t) { return t.type === 'income'; });
     var expenses = transactions.filter(function (t) { return t.type === 'expense'; });
 
-    var incomeTotal = income.reduce(function (sum, t) { return sum + t.amount; }, 0);
-    var expenseTotal = expenses.reduce(function (sum, t) { return sum + t.amount; }, 0);
+    var incomeGroups = this.groupByCurrency(income);
+    var expenseGroups = this.groupByCurrency(expenses);
 
     var rowsHTML = transactions.slice(0, 50).map(function (tx) {
       var amountClass = tx.type === 'income' ? 'amount--income' : 'amount--expense';
@@ -86,8 +104,8 @@ App.screens.import = {
       '<div class="import-summary">' +
         '<h3>Preview — ' + transactions.length + ' transactions</h3>' +
         '<div class="import-stats">' +
-          '<span class="amount--income">' + income.length + ' income (' + App.utils.formatters.currency(incomeTotal) + ')</span>' +
-          '<span class="amount--expense">' + expenses.length + ' expenses (' + App.utils.formatters.currency(expenseTotal) + ')</span>' +
+          '<span class="amount--income">' + self.formatCurrencyGroups(incomeGroups) + ' income</span>' +
+          '<span class="amount--expense">' + self.formatCurrencyGroups(expenseGroups) + ' expenses</span>' +
         '</div>' +
       '</div>' +
       '<div class="import-table-wrapper">' +
